@@ -3,27 +3,68 @@ public class GeometryCalculator {
     public static void main(String[] args) {
         ShapeCalculator calc = new ShapeCalculator();
 
-        System.out.println("Luas Lingkaran (r=7)  : " + calc.hitungLuas("lingkaran", 7, 0));
-        System.out.println("Luas Persegi (s=5)    : " + calc.hitungLuas("persegi", 5, 0));
-        System.out.println("Luas Segitiga (a=6,t=4): " + calc.hitungLuas("segitiga", 6, 4));
+System.out.println("Luas Lingkaran (r=7)  : "
+        + calc.hitungLuas(new Lingkaran(7)));
+
+System.out.println("Luas Persegi (s=5)    : "
+        + calc.hitungLuas(new Persegi(5)));
+
+System.out.println("Luas Segitiga (a=6,t=4): "
+        + calc.hitungLuas(new Segitiga(6, 4)));
     }
 }
 
 class ShapeCalculator {
 
-    // ❌ Setiap tambah bentuk baru = harus ubah method ini (melanggar OCP)
-    public double hitungLuas(String bentuk, double a, double b) {
-        if (bentuk.equals("lingkaran")) {
-            return Math.PI * a * a; // a = jari-jari
+    public double hitungLuas(Shape shape) {
+        return shape.hitungLuas();
+    }
+}
 
-        } else if (bentuk.equals("persegi")) {
-            return a * a; // a = sisi
+// ✅ Abstract class Shape — sesuai OCP
+abstract class Shape {
+    public abstract double hitungLuas();
+}
 
-        } else if (bentuk.equals("segitiga")) {
-            return 0.5 * a * b; // a = alas, b = tinggi
+class Lingkaran extends Shape {
 
-        } else {
-            throw new IllegalArgumentException("Bentuk tidak dikenali: " + bentuk);
-        }
+    private double jariJari;
+
+    public Lingkaran(double jariJari) {
+        this.jariJari = jariJari;
+    }
+
+    @Override
+    public double hitungLuas() {
+        return Math.PI * jariJari * jariJari;
+    }
+}
+
+class Persegi extends Shape {
+
+    private double sisi;
+
+    public Persegi(double sisi) {
+        this.sisi = sisi;
+    }
+
+    @Override
+    public double hitungLuas() {
+        return sisi * sisi;
+    }
+}
+
+class Segitiga extends Shape {
+
+    private double alas, tinggi;
+
+    public Segitiga(double alas, double tinggi) {
+        this.alas = alas;
+        this.tinggi = tinggi;
+    }
+
+    @Override
+    public double hitungLuas() {
+        return 0.5 * alas * tinggi;
     }
 }
