@@ -18,6 +18,26 @@ public class BirdSimulation {
     }
 }
 
+List<Bird> semuaBurung = new ArrayList<>();
+semuaBurung.add(new Sparrow("Burung Gereja"));
+semuaBurung.add(new Eagle("Elang"));
+semuaBurung.add(new Penguin("Pinguin"));
+
+System.out.println("=== Semua burung makan ===");
+for (Bird bird : semuaBurung) {
+    bird.makan();
+}
+
+System.out.println("\n=== Hanya burung yang bisa terbang ===");
+for (Bird bird : semuaBurung) {
+
+    if (bird instanceof FlyingBird) {
+        ((FlyingBird) bird).terbang();
+    } else {
+        System.out.println(bird.getName() + " tidak bisa terbang.");
+    }
+}
+
 class Bird {
     protected String name;
 
@@ -33,6 +53,23 @@ class Bird {
         System.out.println(name + " sedang makan.");
     }
 }
+
+abstract class Bird {
+    protected String name;
+
+    public Bird(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void makan() {
+        System.out.println(name + " sedang makan.");
+    }
+}
+
 
 class Sparrow extends Bird {
     public Sparrow(String name) { super(name); }
@@ -52,6 +89,22 @@ class Eagle extends Bird {
     }
 }
 
+class Sparrow extends Bird implements FlyingBird {
+
+    @Override
+    public void terbang() {
+        System.out.println(name + " terbang dengan cepat ke sana kemari!");
+    }
+}
+
+class Eagle extends Bird implements FlyingBird {
+
+    @Override
+    public void terbang() {
+        System.out.println(name + " melayang tinggi di angkasa!");
+    }
+}
+
 class Penguin extends Bird {
     public Penguin(String name) { super(name); }
 
@@ -63,4 +116,16 @@ class Penguin extends Bird {
     public void berenang() {
         System.out.println(name + " berenang dengan lincah di air!");
     }
+}
+
+class Penguin extends Bird {
+
+    public void berenang() {
+        System.out.println(name + " berenang dengan lincah di air!");
+    }
+}
+
+
+interface FlyingBird {
+    void terbang();
 }
