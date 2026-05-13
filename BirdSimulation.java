@@ -1,24 +1,7 @@
 public class BirdSimulation {
 
     public static void main(String[] args) {
-        Bird[] birds = {
-            new Sparrow("Burung Gereja"),
-            new Eagle("Elang"),
-            new Penguin("Pinguin") 
-        };
-
-        System.out.println("=== Semua burung mencoba terbang ===");
-        for (Bird bird : birds) {
-            try {
-                bird.terbang();
-            } catch (UnsupportedOperationException e) {
-                System.out.println("ERROR: " + e.getMessage());
-            }
-        }
-    }
-}
-
-List<Bird> semuaBurung = new ArrayList<>();
+        List<Bird> semuaBurung = new ArrayList<>();
 semuaBurung.add(new Sparrow("Burung Gereja"));
 semuaBurung.add(new Eagle("Elang"));
 semuaBurung.add(new Penguin("Pinguin"));
@@ -37,21 +20,12 @@ for (Bird bird : semuaBurung) {
         System.out.println(bird.getName() + " tidak bisa terbang.");
     }
 }
-
-class Bird {
-    protected String name;
-
-    public Bird(String name) {
-        this.name = name;
     }
+}
 
-    public void terbang() {
-        System.out.println(name + " sedang terbang...");
-    }
 
-    public void makan() {
-        System.out.println(name + " sedang makan.");
-    }
+interface FlyingBird {
+    void terbang();
 }
 
 abstract class Bird {
@@ -70,8 +44,7 @@ abstract class Bird {
     }
 }
 
-
-class Sparrow extends Bird {
+class Sparrow extends Bird implements FlyingBird {
     public Sparrow(String name) { super(name); }
 
     @Override
@@ -80,29 +53,12 @@ class Sparrow extends Bird {
     }
 }
 
-class Eagle extends Bird {
+class Eagle extends Bird implements FlyingBird {
     public Eagle(String name) { super(name); }
 
-    @Override
-    public void terbang() {
-        System.out.println(name + " melayang tinggi di angkasa!");
-    }
+    interface FlyingBird {
+    void terbang();
 }
-
-class Sparrow extends Bird implements FlyingBird {
-
-    @Override
-    public void terbang() {
-        System.out.println(name + " terbang dengan cepat ke sana kemari!");
-    }
-}
-
-class Eagle extends Bird implements FlyingBird {
-
-    @Override
-    public void terbang() {
-        System.out.println(name + " melayang tinggi di angkasa!");
-    }
 }
 
 class Penguin extends Bird {
@@ -116,16 +72,4 @@ class Penguin extends Bird {
     public void berenang() {
         System.out.println(name + " berenang dengan lincah di air!");
     }
-}
-
-class Penguin extends Bird {
-
-    public void berenang() {
-        System.out.println(name + " berenang dengan lincah di air!");
-    }
-}
-
-
-interface FlyingBird {
-    void terbang();
 }
