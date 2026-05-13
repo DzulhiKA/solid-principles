@@ -2,8 +2,15 @@ public class BadSRP {
 
     public static void main(String[] args) {
         Student student = new Student("Budi Santoso", 85, 90, 78);
-        student.printReport();
-        student.saveToDatabase();
+ 
+        NilaiCalculator calculator = new NilaiCalculator();
+        double nilaiAkhir = calculator.hitungNilaiAkhir(student);
+ 
+        ReportPrinter printer = new ReportPrinter();
+        printer.printReport(student, nilaiAkhir);
+ 
+        StudentRepository repository = new StudentRepository();
+        repository.save(student);
     }
 }
 
@@ -20,27 +27,49 @@ class Student {
         this.nilaiUAS = nilaiUAS;
     }
 
-    public String getName() { return name; }
-    public double getNilaiTugas() { return nilaiTugas; }
-    public double getNilaiUTS() { return nilaiUTS; }
-    public double getNilaiUAS() { return nilaiUAS; }
-
-    public double hitungNilaiAkhir() {
-        return (nilaiTugas * 0.30) + (nilaiUTS * 0.35) + (nilaiUAS * 0.35);
+    public String getName() {
+        return name;
     }
-    public void printReport() {
+
+    public double getNilaiTugas() {
+        return nilaiTugas;
+    }
+
+    public double getNilaiUTS() {
+        return nilaiUTS;
+    }
+
+    public double getNilaiUAS() {
+        return nilaiUAS;
+    }
+}
+
+class NilaiCalculator {
+    public double hitungNilaiAkhir(Student student) {
+        return (student.getNilaiTugas() * 0.30)
+                + (student.getNilaiUTS() * 0.35)
+                + (student.getNilaiUAS() * 0.35);
+    }
+}
+
+class ReportPrinter {
+    public void printReport(Student student, double nilaiAkhir) {
         System.out.println("======= LAPORAN MAHASISWA =======");
-        System.out.println("Nama     : " + name);
-        System.out.println("Tugas    : " + nilaiTugas);
-        System.out.println("UTS      : " + nilaiUTS);
-        System.out.println("UAS      : " + nilaiUAS);
-        System.out.println("Nilai Akhir: " + hitungNilaiAkhir());
+        System.out.println("Nama       : " + student.getName());
+        System.out.println("Tugas      : " + student.getNilaiTugas());
+        System.out.println("UTS        : " + student.getNilaiUTS());
+        System.out.println("UAS        : " + student.getNilaiUAS());
+        System.out.println("Nilai Akhir: " + nilaiAkhir);
         System.out.println("=================================");
     }
+}
 
-    public void saveToDatabase() {
-        // Simulasi penyimpanan ke database
-        String data = name + "," + nilaiTugas + "," + nilaiUTS + "," + nilaiUAS;
+class StudentRepository {
+    public void save(Student student) {
+        String data = student.getName() + ","
+                + student.getNilaiTugas() + ","
+                + student.getNilaiUTS() + ","
+                + student.getNilaiUAS();
         System.out.println("[DATABASE] Menyimpan data: " + data);
     }
 }
