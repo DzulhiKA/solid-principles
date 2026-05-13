@@ -1,4 +1,4 @@
-public class BadLSP {
+public class BirdSimulation {
 
     public static void main(String[] args) {
         Bird[] birds = {

@@ -1,4 +1,4 @@
-public class BadOCP {
+public class GeometryCalculator {
 
     public static void main(String[] args) {
         ShapeCalculator calc = new ShapeCalculator();

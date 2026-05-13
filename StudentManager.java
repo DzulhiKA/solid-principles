@@ -1,4 +1,4 @@
-public class BadSRP {
+public class StudentManager {
 
     public static void main(String[] args) {
         Student student = new Student("Budi Santoso", 85, 90, 78);
