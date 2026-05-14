@@ -21,7 +21,6 @@ class ShapeCalculator {
     }
 }
 
-// ✅ Abstract class Shape — sesuai OCP
 abstract class Shape {
     public abstract double hitungLuas();
 }
